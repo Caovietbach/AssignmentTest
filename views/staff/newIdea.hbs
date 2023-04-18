@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Idea</title>
+</head>
+<body>
+    <h1>Upload a new Idea</h1>
+    <span style="color: red;">{{errorMsg}}</span>
+    <form method="post" action="/staff/newIdea" enctype="multipart/form-data">
+        Idea:
+        <br>
+        <input type="file" name="myFile" id="myFile" accept=".pdf"/>
+        <br>
+        Category: 
+        <br>
+        <select name="Category">
+            <option value="">Please choose a Category</option>
+            {{#each categories}}
+            <option value="{{name}}">{{name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        Event: 
+        <br>
+        <select name="Event">
+            <option value="">Please choose an Event</option>
+            {{#each events}}
+            <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        Do you want to stay anonymous?
+        <select name="Anon">
+            <option value="Yes"> Yes </option>
+            <option value="No"> No </option>
+        </select>
+        <br>
+        <input type="submit" value="Submit Idea">
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href ="style.css"/>
+    <title>View All Categories</title>
+</head>
+<body>
+    <h1>FPT University</h1>
+    <div class = "bar">
+        <a href="/qamanager/viewIdea">Menu</a>
+        <a href="/qamanager/newCategory">New Category</a>
+        <a href="/qamanager/viewCategory">View Category</a>
+        <a href="/qamanager/viewChart">View Chart</a>
+        <a href="/logout">Logout</a> 
+    </div>
+    <h2>View all categories</h1>
+    <ul>
+        <center>
+        <table border="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Option</th>
+            </tr>
+            {{#each category}}
+            <tr>
+                <td>
+                    {{name}}  
+                </td>
+                <td>
+                    <a onclick="return confirm('Are you sure you want to delete this product?')" href="/deleteCategory?id={{_id}}">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </thead>
+        </table>
+        </center>
+    </ul>
+</body>
+</html>

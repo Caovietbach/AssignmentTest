@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write your comment</title>
+</head>
+<body>
+    <form method="post" action="/admin/submitComment">
+        <input type="hidden" name="id" value="{{idea._id}}">
+        Comment :
+        <br>
+        <input type="text" name="txtComment">
+        <br>
+        <button type="submit" class="btn btn-danger">Comment</button>
+    </form>
+</body>
+</html>

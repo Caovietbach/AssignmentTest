@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Event</title>
+</head>
+<body>
+    <h1>FPT University</h1>
+    <div class = "bar">
+        <a href="/admin/home">Menu</a>
+        <a href="/admin/viewIdea">View Idea</a>
+        <a href="/admin/viewAccount">View Account</a>
+        <a href="/logout">Logout</a> 
+    </div>
+    <h2>View all Ideas</h1>
+    <ul>
+        <center>
+        <div>
+            <span style="color: red;">{{errorMsg}}</span>
+        </div>
+        <table border="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            {{#each events}}
+            <tr>
+                <td>
+                    {{name}}  
+                </td>
+                <td>
+                    {{startDate}}
+                </td>
+                <td>
+                    {{endDate}}
+                </td>
+                <br>
+            </tr>
+            {{/each}}
+        </thead>
+        </table>
+        </center>
+    </ul>
+</body>
+</html>

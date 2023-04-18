@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Comment</title>
+</head>
+<body>
+    <h1>The comment section of {{idea.name}}</h1>
+        <ul>
+        <center>
+        <div>
+            <span style="color: red;">{{errorMsg}}</span>
+        </div>
+        <table border="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Comment</th>
+            </tr>
+            {{#each comments}}
+            <tr>
+                <td>
+                    {{user}}
+                </td>
+                <td>
+                    {{comment}}
+                </td>
+            </tr>
+            {{/each}}
+        </thead>
+        </table>
+        </center>
+    </ul>
+</body>
+</html>

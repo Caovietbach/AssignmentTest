@@ -1,0 +1,49 @@
+.body-image {
+    background-image: url("http://fpt-greenwich.weebly.com/uploads/1/2/8/0/12801844/_7599212_orig.jpg");
+    background-size: cover;
+}
+
+.table-Listideas {
+    margin: 30px 10%;
+}
+
+.T-content {
+    margin: 100px 15% 0 !important;
+}
+
+.boder-size {
+    width: 80%;
+    margin-left: 10%;
+}
+.View-idea{
+    height:350px;
+    width:60%;
+    margin-left:20%;
+    border-radius:5px;
+}
+.Author-margin{
+    margin-top:240px;
+}
+.icon-like {
+    margin-left: 45px;
+    margin-top: -25px;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+}
+.icon-cmt {
+    margin-left: 88px;
+    margin-top: -25px;
+    height: 15px;
+    width: 15px;
+    font-size:12px;
+}
+.View-createidea {
+    width: 60%;
+    margin-left: 20%;
+    border-radius: 5px;
+}
+.folder-post{
+    margin-left:47%;
+    width:6%;
+}

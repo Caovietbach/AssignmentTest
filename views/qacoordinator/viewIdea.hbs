@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<body>
+    <div>
+        <li><a href="/qacoordinator/home">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </div>
+    <center>
+    <div>
+        <form method="post" action="/qacoordinator/viewSort">
+        Searching Idea:
+        <br>
+        <input type="text" name="Input" placeholder="Please enter the category or event of the idea(s) you want to search.">    <input type="submit" value="Search">
+        </form>
+    </div>
+    <center>
+    <h2>View all Ideas</h1>
+    <ul>
+        <center>
+        <div>
+            <span style="color: red;">{{errorMsg}}</span>
+        </div>
+        <table border="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th>Idea</th>
+                <th>Author Name</th>
+                <th>Like</th>
+                <th>Category</th>
+                <th>Event</th>
+                <th>Department</th>
+                <th>Rating</th>
+                <th>Comment</th>
+            </tr>
+            {{#each ideas}}
+            <tr>
+                <td>
+                    <a href="/qacoordinator/Idea?id={{_id}}">{{name}}</a>  
+                </td>
+                <td>
+                    {{author}}
+                </td>
+                <td>
+                    {{likeCount}}
+                </td>
+                <td>
+                    {{category}}
+                </td>
+                <td>
+                    {{event}}
+                </td>
+                <td>
+                    {{department}}
+                </td>
+                <td>
+                <button type="submit" class="btn btn-danger">
+                        <a href="/qacoordinator/likeIdea?id={{_id}}">
+                            Thump Up
+                        </a> 
+                </button>
+                <button type="submit" class="btn btn-danger">
+                        <a href="/qacoordinator/dislikeIdea?id={{_id}}">
+                            Thump Down
+                        </a> 
+                </button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-danger">
+                        <a href="/qacoordinator/submitComment?id={{_id}}">
+                            Comment
+                        </a> 
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <a href="/qacoordinator/viewComment?id={{_id}}">
+                            View All Comment
+                        </a> 
+                    </button>
+                </td>
+                <br><br>
+            </tr>
+            {{/each}}
+        </thead>
+        </table>
+        </center>
+    </ul>
+</body>
+</html>

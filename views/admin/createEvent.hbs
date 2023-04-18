@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="datepicker.min.css">
+    <title>Create Event</title>
+</head>
+<body>
+    <h1>Create a new event</h1>
+    <form method="post" action="/admin/createEvent">
+        <span style="color: red;">{{errorName}}</span>
+        Name : <input type="text" name="txtName">
+        <br>
+        Start Date:
+        <br>
+        <input type="date" class="form-control" name="startDate" placeholder="">
+        <br>
+        End Date:
+        <br>
+        <input type="date" class="form-control" name="endDate" placeholder="">
+        <br>
+        <input type="submit" value="Create Event">
+    </form>
+</body>
+</html>
