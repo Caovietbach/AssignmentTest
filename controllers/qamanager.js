@@ -72,10 +72,7 @@ router.post('/submitComment',requiresLoginQAmanager, async (req,res)=>{
         }
     }
     const check = await insertObject(COMMENT_TABLE_NAME,com)
-    console.log(check)
-    req.session.save(() => {
-        res.redirect('/qamanager/viewIdea')
-    })
+    res.redirect('/qamanager/viewIdea')
 })
 
 router.post('/viewChart', async (req, res) => {

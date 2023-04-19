@@ -2,10 +2,12 @@ const express = require('express')
 const async = require('hbs/lib/async')
 const {ObjectId} = require('bson')
 const router = express.Router()
-const {getDB,insertObject,getAnIdea,getAllDocumentFromCollection,getAccount,updateIdeaLikeCount,
-    checkUserLike,checkUserEmale,checkUserDislike, getAEvent, editEvent, checkExistEmail,
-    ROLE_TABLE_NAME,USER_TABLE_NAME,IDEA_TABLE_NAME,POSTLIKE_TABLE_NAME,POSTDISLIKE_TABLE_NAME,COMMENT_TABLE_NAME,EVENT_TABLE_NAME,DEPARTMENT_TABLE_NAME
-    ,getAnAccount,updateAccount, getIdeaFeedback,} = require('../databaseHandler')
+const {getDB,insertObject,getAccount,getAllDocumentFromCollection,getAnAccount,updateAccount,
+    getIdeaFeedback, getAEvent, editEvent, checkUserDepartment,searchIdeaByDepartmentAndEvent,searchDepartmentName,
+    checkUserRole,checkUserLogin,updateIdeaLikeCount,getAnIdea,checkCategory, checkUserLike, 
+    checkUserDislike,checkUserEmail, checkExistEmail,searchIdeaByCategory, searchIdeaByEvent,searchCoordinator,
+    EVENT_TABLE_NAME,USER_TABLE_NAME,IDEA_TABLE_NAME,CATEGORY_TABLE_NAME,ROLE_TABLE_NAME,
+    DEPARTMENT_TABLE_NAME,POSTLIKE_TABLE_NAME,POSTDISLIKE_TABLE_NAME,COMMENT_TABLE_NAME} = require('../databaseHandler')
 
 function requiresLoginAdmin(req,res,next){
     if(req.session.user){
@@ -130,28 +132,31 @@ router.post('/doUpdateAccount', async (req,res)=>{
 router.post('/createEvent',async (req,res)=>{
     const name = req.body.txtName
     console.log(name)
-    const startDate = new Date(req.body.startDate).toISOString()
+    const startDate = req.body.startDate
     console.log(startDate)
-    const endDate = new Date(req.body.endDate).toISOString()
+    const endDate = req.body.endDate
     console.log(endDate)
 
-    const realtimeDate = new Date().getTime() 
-    console.log(realtimeDate)
-    const sDate = new Date(req.body.startDate).getTime()
-    const eDate = new Date(req.body.endDate).getDate()
-    if (sDate < realtimeDate){
+    const realtimeDate = new Date()
+    console.log(Date(realtimeDate))
+    const sDate = new Date(req.body.startDate)
+    const eDate = new Date(req.body.endDate)
+    if(name.length == 0){
+        const errorMessage = "The event must have a name"
+        res.render('admin/createEvent',{errorMsg:errorMessage})
+    }else if (sDate < realtimeDate){
         const errorMessage = "The event start date is passed"
-        res.render('admin/createEvent',{errorName:errorMessage})
+        res.render('admin/createEvent',{errorMsg:errorMessage})
         console.log("1")
         return;
-    } else if(eDate > realtimeDate) {
+    } else if(eDate < realtimeDate) {
         const errorMessage = "The event end date is passed"
-        res.render('admin/createEvent',{errorName:errorMessage})
+        res.render('admin/createEvent',{errorMsg:errorMessage})
         console.log("2")
         return;
-    } else if (eDate > sDate) {
+    } else if (sDate > eDate) {
         const errorMessage = "The event end date is earlier than the start date"
-        res.render('admin/createEvent',{errorName:errorMessage})
+        res.render('admin/createEvent',{errorMsg:errorMessage})
         console.log("3")
         return
     } else {
@@ -170,11 +175,12 @@ router.post('/createEvent',async (req,res)=>{
 router.post('/editEvent', async (req,res)=>{
     var id = req.body.id;
     var objectId = ObjectId(id)
+    const event 
     const name = req.body.TxTName
     const startDate = Date.parse(req.body.StartDate)
     const endDate = Date.parse(req.body.EndDate)
     if (sDate < realtimeDate){
-        req.session.error.msg = "The event start date is passed"
+        errorMessage = "The event start date is passed"
         
     } else if(eDate > realtimeDate) {
         const errorMessage = "The event end date is passed"

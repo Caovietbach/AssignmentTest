@@ -10,79 +10,90 @@
     <title>View All Ideas</title>
 </head>
 <body>
-    <h1>FPT University</h1>
-    <div class = "bar">
-        <a href="/admin/home">Menu</a>
-        <a href="/admin/viewIdea">View Idea</a>
-        <a href="/admin/viewAccount">View Account</a>
-        <a href="/logout">Logout</a> 
-    </div>
-    <h2>View all Ideas</h2>
-    <ul>
-        <center>
-        <div>
-            <span style="color: red;">{{errorMsg}}</span>
+    <div class="m-xxl-5 d-flex justify-content-between">
+        <div class="">
+            <h2>FPT GREENWICH </h2>
         </div>
-        <table border="1" cellspacing="1">
-        <thead>
-            <tr>
-                <th>Idea</th>
-                <th>Author Name</th>
-                <th>Like</th>
-                <th>Category</th>
-                <th>Event</th>
-                <th>Department</th>
-                <th>Rating</th>
-                <th>Comment</th>
-            </tr>
-            {{#each ideas}}
-            <tr>
-                <td>
-                    <a href="/admin/Idea?id={{_id}}">{{name}}</a>  
-                </td>
-                <td>
-                    {{author}}
-                </td>
-                <td>
-                    {{likeCount}}
-                </td>
-                <td>
-                    {{category}}
-                </td>
-                <td>
-                    {{event}}
-                </td>
-                <td>
-                    {{department}}
-                <td>
-                <button type="submit" class="btn btn-danger">
-                        <a href="/admin/likeIdea?id={{_id}}">
-                            Thump Up
-                        </a> 
-                </button>
-                <button type="submit" class="btn btn-danger">
-                        <a href="/admin/dislikeIdea?id={{_id}}">
-                            Thump Down
-                        </a> 
-                </button>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-danger">
-                        <a href="/admin/submitComment?id={{_id}}">
-                            Comment
-                        </a> 
-                    </button>
-                    <button type="submit" class="btn btn-danger">
-                        <a href="/admin/viewComment?id={{_id}}">
-                            View All Comment
-                        </a> 
-                    </button>
-                </td>
-                <br><br>
-            </tr>
-            {{/each}}
-        </thead>
-        </table>
+        <div>
+            <a href="/admin/home" class="btn btn-light">Home</a>
+            <a href="/admin/viewIdea" class="btn btn-light">Ideas</a>
+            <a href="/admin/newAccount" class="btn btn-light">Add a new Account</a>
+            <a href="/admin/viewAccount" class="btn btn-light">View all Account</a> 
+            <a href="/admin/viewEvent" class="btn btn-light">View Event</a>
+            <a href="/admin/createEvent" class="btn btn-light">Create Event</a> 
+            <a href="/logout" class="btn btn-light">Logout</a>
+        </div>
+    </div>
+    <h2 class="text-center">View all Ideas</h2>
+    <center>
+    <div>
+        <form method="post" action="/admin/viewSort">
+        Searching Idea:
+        <br>
+        <input type="text" name="Input" placeholder="Seacrh by Category or Event" size="50">    <input type="submit" value="Search">
+        </form>
+    </div>
+    </center>
+    <div class="table-Listideas p-5">
+            <table border="0" cellspacing="2" class="table table-primary table-borderless">
+                <thead>
+                    <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">IDEA</th>
+                                    <th class="text-center" scope="col">Author Name</th>
+                                    <th class="text-center" scope="col">Category</th>
+                                    <th class="text-center" scope="col">Event</th>
+                                    <th class="text-center" scope="col">Department</th>
+                                    <th class="text-center" scope="col">Like</th>
+                                    <th class="text-center" scope="col">Action</th>
+                                </tr>
+                            </thead>
+                    {{#each ideas}}
+                    <tr>
+                        <td>
+                            <a class="text-decoration-none" href="/admin/Idea?id={{_id}}">{{name}}</a>  
+                        </td>
+                        <td>
+                            {{author}}
+                        </td>
+                        <td>
+                            {{category}}
+                        </td>
+                        <td>
+                            {{event}}
+                        </td>
+                        <td>
+                            {{department}}
+                        </td>
+                        <td>
+                            {{likeCount}}
+                        </td>
+                        <td class="text-center">
+                            <button type="submit" class="btn btn-warning">
+                                <a href="/admin/likeIdea?id={{_id}}">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </a> 
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                                <a href="/admin/dislikeIdea?id={{_id}}">
+                                    <i class="fa-solid fa-thumbs-down"></i>
+                                </a> 
+                        </button>
+                            <button type="submit" class="btn btn-light">
+                                <a href="/admin/submitComment?id={{_id}}" class="">
+                                    <i class="fa-solid fa-comment fa-beat" style="color: #5f51c2;"></i>
+                                </a> 
+                        </button>
+                            <button class="btn btn-primary">
+                                <a class="text-decoration-none " style="color: black;" href="/admin/viewComment">ViewComment</a>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </thead>
+            </table>
+        </div>
+        
         </center>
     </ul>
 </body>

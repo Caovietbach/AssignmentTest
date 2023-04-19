@@ -5,9 +5,9 @@ const fs = require('fs')
 const {ObjectId} = require('bson')
 const router = express.Router()
 const {getDB,insertObject,getAccount,getAllDocumentFromCollection,getAnAccount,updateAccount,
-    getIdeaFeedback, getAEvent, editEvent, checkUserDepartment,searchCoordinator,
+    getIdeaFeedback, getAEvent, editEvent, checkUserDepartment,searchIdeaByDepartmentAndEvent,searchDepartmentName,
     checkUserRole,checkUserLogin,updateIdeaLikeCount,getAnIdea,checkCategory, checkUserLike, 
-    checkUserDislike,checkUserEmail, checkExistEmail,searchIdeaByCategory, searchIdeaByEvent,
+    checkUserDislike,checkUserEmail, checkExistEmail,searchIdeaByCategory, searchIdeaByEvent,searchCoordinator,
     EVENT_TABLE_NAME,USER_TABLE_NAME,IDEA_TABLE_NAME,CATEGORY_TABLE_NAME,ROLE_TABLE_NAME,
     DEPARTMENT_TABLE_NAME,POSTLIKE_TABLE_NAME,POSTDISLIKE_TABLE_NAME,COMMENT_TABLE_NAME} = require('../databaseHandler');
 
@@ -197,7 +197,6 @@ router.get('/submitComment', requiresLoginqaCoordinator, async (req, res) => {
     const objectId = ObjectId(id)
     const result = await getAnIdea(objectId)
     res.render('qacoordinator/submitComment',{idea: result})
-    req.session.error.msg = null
 })
 
 router.get('/newIdea', requiresLoginqaCoordinator, async (req,res)=>{
