@@ -22,29 +22,28 @@
             <a href="/logout" class="btn btn-light">Logout</a>
         </div>
     </div>
-    <ul>
-        <center>
-        <h1 class="text-center">The comment section of {{idea.name}}</h1>
-        </center>
-        <div class="table-Listideas p-5">
-            <table border="0" cellspacing="2" class="table table-primary table-borderless">
+    <center>
+    <h1 class="text-center">The comment section of {{idea.name}}</h1>
+    </center>
+    <div class="table-Listideas p-5">
+        <table border="0" cellspacing="2" class="table table-primary table-borderless">
+            <thead>
                 <thead>
-                    <thead>
-                            <tr>
-                                <th class="text-center" scope="col">User</th>
-                                <th class="text-center" scope="col">Action</th>
-                            </tr>
-                            </thead>
-                    {{#each comments}}
                         <tr>
-                            <td>
-                                {{user}}
+                            <th class="text-center" scope="col">User</th>
+                            <th class="text-center" scope="col">Comment</th>
+                        </tr>
+                        </thead>
+                {{#each comments}}
+                    <tr>
+                        <td>
+                            {{user}}
                         </td>
                         <td>
                             {{comment}}
                         </td>
-                        </tr>
-                    {{/each}}
+                    </tr>
+                {{/each}}
                 </thead>
             </table>
         </div>
