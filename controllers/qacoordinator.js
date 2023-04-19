@@ -56,7 +56,7 @@ router.post('/submitComment',requiresLoginQACoordinator, async (req,res)=>{
 })
 
 
-router.post('/viewSort', async (req, res)=>{
+router.post('/viewSort',requiresLoginQACoordinator, async (req, res)=>{
     const input = req.body.Input
     var checkC = await searchIdeaByCategory(input)
     console.log(checkC)

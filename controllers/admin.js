@@ -77,7 +77,7 @@ router.post('/newAccount',requiresLoginAdmin, async (req,res)=>{
     
 })
 
-router.post('/doUpdateAccount', async (req,res)=>{
+router.post('/doUpdateAccount',requiresLoginAdmin, async (req,res)=>{
     var id = req.body.id;
     var objectId = ObjectId(id)
     const username = req.body.txtUsername
@@ -125,7 +125,7 @@ router.post('/doUpdateAccount', async (req,res)=>{
     
 })
 
-router.post('/createEvent',async (req,res)=>{
+router.post('/createEvent',requiresLoginAdmin,async (req,res)=>{
     const name = req.body.txtName
     console.log(name)
     const startDate = req.body.startDate
@@ -207,7 +207,7 @@ router.post('/editEvent', requiresLoginAdmin, async (req,res)=>{
     }
 })
 
-router.post('/submitComment', async (req,res)=>{
+router.post('/submitComment',requiresLoginAdmin, async (req,res)=>{
     var id = req.body.id
     console.log(id)
     const user = req.session.user.userName
@@ -231,7 +231,7 @@ router.post('/submitComment', async (req,res)=>{
     res.redirect('/admin/viewIdea')
 })
 
-router.post('/viewSort', async (req, res)=>{
+router.post('/viewSort',requiresLoginAdmin, async (req, res)=>{
     const input = req.body.Input
     var checkC = await searchIdeaByCategory(input)
     console.log(checkC)
@@ -257,14 +257,14 @@ router.post('/viewSort', async (req, res)=>{
 
 //GET
 
-router.get('/home',(req,res)=>{
+router.get('/home',requiresLoginAdmin,(req,res)=>{
     res.render('admin/home')
 })
 
 
 ////////////////////////////////////////////  ACCOUNT MANAGEMENT ///////////////////////////////////////////////
 
-router.get('/newAccount', async(req,res)=>{
+router.get('/newAccount', requiresLoginAdmin, async(req,res)=>{
     const results = await getAllDocumentFromCollection(ROLE_TABLE_NAME)
     const departments = await getAllDocumentFromCollection(DEPARTMENT_TABLE_NAME)
     if(req.session.error.msg != null){
@@ -277,7 +277,7 @@ router.get('/newAccount', async(req,res)=>{
     }
 })
 
-router.get('/updateAccount', async (req,res)=>{
+router.get('/updateAccount',requiresLoginAdmin,  async (req,res)=>{
     var id = req.query.id;
     var objectId = ObjectId(id)
     var account = await getAnAccount(objectId);
@@ -287,7 +287,7 @@ router.get('/updateAccount', async (req,res)=>{
     res.render('admin/updateAccount',{account:account,roles:roles,departments:departments})
 })
 
-router.get('/deleteAccount',async (req,res)=>{
+router.get('/deleteAccount',requiresLoginAdmin,async (req,res)=>{
     let id = req.query.id
     console.log(id)
     let objectId = ObjectId(id)
@@ -296,7 +296,7 @@ router.get('/deleteAccount',async (req,res)=>{
     res.redirect('/admin/viewAccount')
 })
 
-router.get('/viewAccount',async (req,res)=>{
+router.get('/viewAccount',requiresLoginAdmin,async (req,res)=>{
     let result = await getAccount()
     res.render('admin/viewAccount',{'accounts': result})
 })
@@ -306,7 +306,7 @@ router.get('/viewAccount',async (req,res)=>{
                                                     //++++//
 
 ///////////////////////////////////////////////// LIKE ///////////////////////////////////////////////////////////////////////
-router.get('/likeIdea', async (req, res) => {
+router.get('/likeIdea',requiresLoginAdmin, async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     const userEmail = req.session.user.email
@@ -348,7 +348,7 @@ router.get('/likeIdea', async (req, res) => {
     }
 })
 
-router.get('/dislikeIdea', async (req, res) => {
+router.get('/dislikeIdea',requiresLoginAdmin, async (req, res) => {
     const id = req.query.id
     console.log(id)
     const objectId = ObjectId(id)
@@ -394,14 +394,14 @@ router.get('/dislikeIdea', async (req, res) => {
     }
 })
 
-router.get('/viewIdea', async(req,res)=>{
+router.get('/viewIdea',requiresLoginAdmin, async(req,res)=>{
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     res.render('admin/viewIdea',{'ideas':results})
 })
 
 ///////////////////////////////////////////////////// COMMENT ////////////////////////////////////////////////////////////////////
 
-router.get('/Idea',async (req, res) => {
+router.get('/Idea',requiresLoginAdmin,async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     const result = await getAnIdea(objectId)
@@ -417,7 +417,7 @@ router.get('/submitComment', async (req, res) => {
     res.render('admin/submitComment',{idea: result})
 })
 
-router.get('/viewComment',async (req,res)=>{
+router.get('/viewComment',requiresLoginAdmin,async (req,res)=>{
     const id = req.query.id
     console.log(id)
     const result = await getIdeaFeedback(id)
@@ -434,7 +434,7 @@ router.get('/createEvent', async (req, res) =>{
 })
 
 
-router.get('/editEvent', async (req, res) =>{
+router.get('/editEvent', requiresLoginAdmin,async (req, res) =>{
     var id = req.query.id
     const objectId = ObjectId(id)
     var event = await getAEvent(objectId)
@@ -448,7 +448,7 @@ router.get('/editEvent', async (req, res) =>{
     }
 })
 
-router.get('/viewEvent',async (req, res) =>{
+router.get('/viewEvent',requiresLoginAdmin,async (req, res) =>{
     const results = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
     res.render('admin/viewEvent',{'events':results})
 })

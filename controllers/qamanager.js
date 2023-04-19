@@ -74,7 +74,7 @@ router.post('/submitComment',requiresLoginQAmanager, async (req,res)=>{
     res.redirect('/qamanager/viewIdea')
 })
 
-router.post('/viewChart', async (req, res) => {
+router.post('/viewChart',requiresLoginQAmanager, async (req, res) => {
     const choice = req.body.c
     const event = req.body.Event
     const objectId = ObjectId(event)
@@ -141,7 +141,7 @@ router.post('/viewChart', async (req, res) => {
     }
 })
 
-router.post('/viewSort', async (req, res)=>{
+router.post('/viewSort',requiresLoginQAmanager, async (req, res)=>{
     const input = req.body.Input
     var checkC = await searchIdeaByCategory(input)
     console.log(checkC)
@@ -221,7 +221,7 @@ router.get('/viewCategory', async(req, res) => {
     
     
 
-router.get('/newCategory', async (req, res) => {
+router.get('/newCategory',requiresLoginQAmanager, async (req, res) => {
     res.render('qamanager/newCategory')
 })
 
@@ -250,7 +250,7 @@ router.get('/viewComment', requiresLoginQAmanager,async (req,res)=>{
     res.render('qamanager/viewComment',{comments:result,idea:idea})
 })
 
-router.get('/viewIdea', async (req, res) => {
+router.get('/viewIdea',requiresLoginQAmanager, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if(req.session.error.msg != null){
         const error = req.session.error.msg
@@ -262,7 +262,7 @@ router.get('/viewIdea', async (req, res) => {
     }
 })
 
-router.get('/viewChart',async (req, res) => {
+router.get('/viewChart',requiresLoginQAmanager,async (req, res) => {
     const events = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
     if (req.session.error.msg != null){
         res.render('qamanager/viewChart',{events: events, error: req.session.error.msg})
