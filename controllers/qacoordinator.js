@@ -64,11 +64,11 @@ router.post('/viewSort',requiresLoginQACoordinator, async (req, res)=>{
     console.log(checkE)
     if (checkC.length != 0 && checkE.length == 0){
         console.log(checkC)
-        res.render('qacoordinator/viewIdea',{ideas:checkC})
+        res.render('qacoordinator/viewIdea',{ideas:checkC.reverse()})
         return
     } else if (checkC.length == 0 && checkE.length != 0){
         console.log(checkE)
-        res.render('qacoordinator/viewIdea',{ideas:checkE})
+        res.render('qacoordinator/viewIdea',{ideas:check.Ereverse()})
         return
     } else {
         console.log("None")
@@ -224,10 +224,10 @@ router.get('/viewIdea',requiresLoginQACoordinator, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if (req.session.error.msg != null){
         const error = req.session.error.msg
-        res.render('qacoordinator/viewIdea',{ideas:results,errorMsg:error})
+        res.render('qacoordinator/viewIdea',{ideas:results.reverse(),errorMsg:error})
         return
     } else {
-        res.render('qacoordinator/viewIdea',{ideas:results})
+        res.render('qacoordinator/viewIdea',{ideas:results.reverse()})
     }
 })
 

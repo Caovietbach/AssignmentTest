@@ -149,11 +149,11 @@ router.post('/viewSort',requiresLoginQAmanager, async (req, res)=>{
     console.log(checkE)
     if (checkC.length != 0 && checkE.length == 0){
         console.log(checkC)
-        res.render('qamanager/viewIdea',{ideas:checkC})
+        res.render('qamanager/viewIdea',{ideas:checkC.reverse()})
         return
     } else if (checkC.length == 0 && checkE.length != 0){
         console.log(checkE)
-        res.render('qamanager/viewIdea',{ideas:checkE})
+        res.render('qamanager/viewIdea',{ideas:checkE.reverse()})
         return
     } else {
         console.log("None")
@@ -254,22 +254,23 @@ router.get('/viewIdea',requiresLoginQAmanager, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if(req.session.error.msg != null){
         const error = req.session.error.msg
-        res.render('qamanager/viewIdea',{ideas:results,ErrorMsg: error})
+        res.render('qamanager/viewIdea',{ideas:results.reverse(),ErrorMsg: error})
         req.session.error.msg = null
         return
     } else {
-        res.render('qamanager/viewIdea',{ideas:results})
+        res.render('qamanager/viewIdea',{ideas:results.reverse()})
     }
 })
 
 router.get('/viewChart',requiresLoginQAmanager,async (req, res) => {
     const events = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
     if (req.session.error.msg != null){
-        res.render('qamanager/viewChart',{events: events, error: req.session.error.msg})
+        const errorMsg = req.session.error.msg
+        res.render('qamanager/viewChart',{events: events.reverse(), error: errorMsg})
         req.session.error.msg = null
         return
     } else {
-        res.render('qamanager/viewChart',{events: events})
+        res.render('qamanager/viewChart',{events: events.reverse()})
     }
 })
 

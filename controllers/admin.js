@@ -239,11 +239,11 @@ router.post('/viewSort',requiresLoginAdmin, async (req, res)=>{
     console.log(checkE)
     if (checkC.length != 0 && checkE.length == 0){
         console.log(checkC)
-        res.render('admin/viewIdea',{ideas:checkC})
+        res.render('admin/viewIdea',{ideas:checkC.reverse()})
         return
     } else if (checkC.length == 0 && checkE.length != 0){
         console.log(checkE)
-        res.render('admin/viewIdea',{ideas:checkE})
+        res.render('admin/viewIdea',{ideas:checkE.reverse()})
         return
     } else {
         console.log("None")
@@ -298,7 +298,7 @@ router.get('/deleteAccount',requiresLoginAdmin,async (req,res)=>{
 
 router.get('/viewAccount',requiresLoginAdmin,async (req,res)=>{
     let result = await getAccount()
-    res.render('admin/viewAccount',{'accounts': result})
+    res.render('admin/viewAccount',{'accounts': result.reverse()})
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,7 +396,15 @@ router.get('/dislikeIdea',requiresLoginAdmin, async (req, res) => {
 
 router.get('/viewIdea',requiresLoginAdmin, async(req,res)=>{
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
-    res.render('admin/viewIdea',{'ideas':results})
+    if(req.session.error.msg != null){
+        const errorMsg = req.session.error.msg
+        res.render('admin/viewIdea',{'ideas':results.reverse(),errorMsg:errorMsg})
+        req.session.error.msg = null
+        return
+    } else {
+        res.render('admin/viewIdea',{'ideas':results.reverse()})
+    }
+    
 })
 
 ///////////////////////////////////////////////////// COMMENT ////////////////////////////////////////////////////////////////////
