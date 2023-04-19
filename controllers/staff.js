@@ -362,7 +362,7 @@ router.get('/Idea', requiresLoginStaff,async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     const result = await getAnIdea(objectId)
-    const name = Date(Date.now()) + "-" + result.idea
+    const name = result.idea
     const folderPath = __dirname.replace('\controllers','')+('/uploads/')
     res.sendFile(folderPath + name)
 })
