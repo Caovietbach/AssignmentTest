@@ -24,20 +24,27 @@
         </div>
     </div>
     <h1 class="text-center">Create a new event</h1>
-    <form method="post" action="/admin/createEvent">
-        <div>
-            <span style="color: red;">{{errorMsg}}</span>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <h1 class="text-center">Edit Event</h1>
+        <div class="container">
+            <form action="/admin/createEvent" method="post">
+                <input type="hidden" name="id" value="{{event._id}}">
+                Event Name: <br>
+                <input type="text" name="txtName" class="form-control" value="{{event.name}}"><br>
+                Start Date: <br>
+                <input type="date" class="form-control" name="startDate" value="{{event.startDate}}"><br>
+                End Date: <br>
+                <input type="date" class="form-control" name="endDate" value="{{event.endDate}}"><br>
+            <center>
+                <button type="submit" class="btn btn-danger">Create Event</button>
+            </center>
+            </form>
         </div>
-        <br>
-        Name : <input type="text" name="txtName">
-        <br>
-        Start Date:
-        <input type="date" class="form-control" name="startDate" placeholder="">
-        <br>
-        End Date:
-        <input type="date" class="form-control" name="endDate" placeholder="">
-        <br>
-        <input type="submit" value="Create Event">
-    </form>
+        </div>
+        <div class="col"></div>
+    </div>
+    
 </body>
 </html>
