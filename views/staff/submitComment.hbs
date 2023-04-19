@@ -9,13 +9,18 @@
     <title>Submit Comment</title>
 </head>
 <body>
-    <div class="row mt-5">
-        <div class="col"></div>
-        <div class="col mt-5">
-            <form method="post" action="/admin/submitComment">
+    <div class="m-xxl-5 d-flex justify-content-between">
+        <div class="">
+            <h2>FPT GREENWICH </h2>
+        </div>
+        <div>
+            <a href="/staff/home" class="btn btn-light">Home</a>
+            <a href="/logout" class="btn btn-light">Logout</a>
+        </div>
+    </div>
+    <form method="post" action="/staff/submitComment">
         <input type="hidden" name="id" value="{{idea._id}}">
-        Comment :
-        <br>
+        Comment : 
         <input type="text" name="txtComment">
         <br>
         Do you want to stay anonymous?
@@ -24,10 +29,8 @@
             <option value="No"> No </option>
         </select>
         <br>
-        <button type="submit" class="btn btn-danger">Comment</button>
+        <button type="submit" class="btn btn-light">Comment</button>
     </form>
-        </div>
-        <div class="col"></div>
-    </div>
+    </center>
 </body>
 </html>
