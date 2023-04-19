@@ -261,7 +261,7 @@ router.get('/viewIdea',requiresLoginQAmanager, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if(req.session.error.msg != null){
         const error = req.session.error.msg
-        res.render('qamanager/viewIdea',{ideas:results.reverse(),ErrorMsg: error})
+        res.render('qamanager/viewIdea',{ideas:results.reverse(),errorMsg: error})
         req.session.error.msg = null
         return
     } else {
