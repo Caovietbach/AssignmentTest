@@ -38,11 +38,11 @@ async function checkUserEmail(nameI,passI){
 
 async function checkExistEmail(e){
     const dbo = await getDB()
-    const check = await dbo.collection(USER_TABLE_NAME).findOne({email:e})
-    if (check == null) {
-        return "1"
+    var check = await dbo.collection(USER_TABLE_NAME).findOne({email:e})
+    if(check) {
+        return -1
     } else {
-        return "-1"
+        return 1
     }
 }
 
@@ -69,7 +69,7 @@ async function checkUserLogin(nameI) {
 
 async function checkCategory(categoryName) {
     const dbo = await getDB();
-    const results = await dbo.collection(CATEGORY_TABLE_NAME).findOne({categoryName: categoryName});
+    const results = await dbo.collection(CATEGORY_TABLE_NAME).findOne({name: categoryName});
     if (results) {
         return 1;
     } else {

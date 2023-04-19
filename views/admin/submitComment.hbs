@@ -22,10 +22,10 @@
             <a href="/logout" class="btn btn-light">Logout</a>
         </div>
     </div>
+    <center>
     <form method="post" action="/admin/submitComment">
         <input type="hidden" name="id" value="{{idea._id}}">
-        Comment :
-        <br>
+        Comment : 
         <input type="text" name="txtComment">
         <br>
         Do you want to stay anonymous?
@@ -34,7 +34,7 @@
             <option value="No"> No </option>
         </select>
         <br>
-        <button type="submit" class="btn btn-danger">Comment</button>
+        <button type="submit" class="btn btn-light">Comment</button>
     </form>
 </body>
 </html>

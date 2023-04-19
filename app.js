@@ -82,7 +82,6 @@ app.post("/login", async(req, res) => {
 
 app.get('/login', async(req,res)=>{
     res.render('login')
-    delete req.session.error
 })
 
 app.get("/logout", (req, res) => {

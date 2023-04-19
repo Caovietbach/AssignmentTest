@@ -24,14 +24,15 @@ function requiresLoginAdmin(req,res,next){
 
 //POST
 
-router.post('/newAccount',requiresLoginAdmin, (req,res)=>{
+router.post('/newAccount',requiresLoginAdmin, async (req,res)=>{
     
     const name = req.body.txtName
     const email = req.body.txtEmail
     const role = req.body.Role
     const department = req.body.Department
     const pass= req.body.txtPassword
-    const result = checkExistEmail(email)
+    const result = await checkExistEmail(email)
+    console.log(result)
 
     if (name.length == 0){
         req.session.error.msg = "An account must have a name"
@@ -49,15 +50,15 @@ router.post('/newAccount',requiresLoginAdmin, (req,res)=>{
         req.session.error.msg = "Admin or Quality Assurance Manager does not need a department"
         res.redirect('/admin/newAccount')
         return
-    } else if ((role == "admin" || role == "QACoordinator") && department == 'None') {
-        req.session.error.msg = "admin or Quality Assurance Coordinator must have a department"
+    } else if ((role == "Staff" || role == "QACoordinator") && department == 'None') {
+        req.session.error.msg = "Staff or Quality Assurance Coordinator must have a department"
         res.redirect('/admin/newAccount')
         return
     } else if (pass.length == 0){
         req.session.error.msg = "An account must have a password"
         res.redirect('/admin/newAccount')
         return
-    } else if (result == "-1"){
+    } else if (result == -1 ){
         req.session.error.msg = "This email has been used"
         res.redirect('/admin/newAccount')
         return
@@ -91,7 +92,6 @@ router.post('/doUpdateAccount', async (req,res)=>{
         'department': department,
         'password': password
     } 
-    const result = checkExistEmail(email)
 
     if (username.length == 0){
         req.session.error.msg = "An account must have a name"
@@ -105,20 +105,16 @@ router.post('/doUpdateAccount', async (req,res)=>{
         req.session.error.msg = "An account must have a role"
         res.redirect('/admin/doUpdateAccount')
         return
-    } else if (role == "Admin" | role == "QAManager" & department != 'None'){
+    } else if ((role == "Admin" | role == "QAManager") & department != 'None'){
         req.session.error.msg = "Admin or Quality Assurance Manager does not need a department"
         res.redirect('/admin/doUpdateAccount')
         return
-    } else if (role == "admin" | role == "QACoordinator" & department == 'None') {
-        req.session.error.msg = "admin or Quality Assurance Coordinator must have a department"
+    } else if ((role == "Staff" | role == "QACoordinator") & department == 'None') {
+        req.session.error.msg = "Staff or Quality Assurance Coordinator must have a department"
         res.redirect('/admin/doUpdateAccount')
         return
     } else if (password.length == 0){
         req.session.error.msg = "An account must have a password"
-        res.redirect('/admin/doUpdateAccount')
-        return
-    } else if (result == "-1"){
-        req.session.error.msg = "This email has been used"
         res.redirect('/admin/doUpdateAccount')
         return
     } else {
@@ -172,40 +168,43 @@ router.post('/createEvent',async (req,res)=>{
     
 })
 
-router.post('/editEvent', async (req,res)=>{
+router.post('/editEvent', requiresLoginAdmin, async (req,res)=>{
     var id = req.body.id;
-    var objectId = ObjectId(id)
-    const event 
-    const name = req.body.TxTName
-    const startDate = Date.parse(req.body.StartDate)
-    const endDate = Date.parse(req.body.EndDate)
-    if (sDate < realtimeDate){
-        errorMessage = "The event start date is passed"
-        
-    } else if(eDate > realtimeDate) {
-        const errorMessage = "The event end date is passed"
-        
-    } else if (eDate > sDate) {
-        const errorMessage = "The event end date is earlier than the start date"
-        
+    console.log(id)
+    const name = req.body.txtName
+    const startDate = req.body.StartDate
+    const endDate = req.body.EndDate
+    
+    const realtimeDate = new Date()
+    console.log(Date(realtimeDate))
+    const sDate = new Date(req.body.startDate)
+    const eDate = new Date(req.body.endDate)
+    if(name.length == 0){
+        req.session.error.msg = "The event must have a name"
+        res.redirect('/admin/editEvent')
+        return
+    }else if (sDate < realtimeDate){
+        req.session.error.msg = "The event start date is passed"
+        res.redirect('/admin/editEvent')
+        return;
+    } else if(eDate < realtimeDate) {
+        req.session.error.msg = "The event end date is passed"
+        res.redirect('/admin/editEvent')
+        return;
+    } else if (sDate > eDate) {
+        req.session.error.msg = "The event end date is earlier than the start date"
+        res.redirect('/admin/editEvent')
+        return
     } else {
         var event = {
             'name' : name,
             'startDate' : startDate,
             'endDate' : endDate
         }
-        const check = await insertObject(EVENT_TABLE_NAME,event)
+        var check = await editEvent(id, event)
         console.log(check)
         res.redirect('/admin/viewEvent')
     }
-    var event = {
-        'name' : name,
-        'startDate' : startDate,
-        'endDate' : endDate
-    }
-    var check = await editEvent(objectId, event)
-    console.log(check)
-    res.redirect('/admin/viewEvent')
 })
 
 router.post('/submitComment', async (req,res)=>{
@@ -436,9 +435,17 @@ router.get('/createEvent', async (req, res) =>{
 
 
 router.get('/editEvent', async (req, res) =>{
-    var id = req.query.id;
-    var event = await getAEvent(id);
-    res.render('admin/editEvent',{'event':event})
+    var id = req.query.id
+    const objectId = ObjectId(id)
+    var event = await getAEvent(objectId)
+    if(req.session.error.msg != null){
+        const errorMsg = req.session.error.msg
+        res.render('admin/editEvent',{'event':event,errorMsg: errorMsg})
+        req.session.error.msg = null
+        return
+    } else {
+        res.render('admin/editEvent',{'event':event})
+    }
 })
 
 router.get('/viewEvent',async (req, res) =>{

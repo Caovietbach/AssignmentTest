@@ -34,14 +34,13 @@ router.post('/newCategory',requiresLoginQAmanager, async (req, res) => {
     const nameInput = req.body.txtName
     const check = await checkCategory(nameInput)
     if (nameInput.length == 0){
-        const errorMessage = "The loai phai co ten!";
+        const errorMessage = "Category must have a name.";
         res.render('qamanager/newCategory',{error:errorMessage})
         console.log("1")
         return;
     } else if (check==1) {
-        const errorMessage = "The loai nay da co!"
-        const oldValues = nameInput       
-        res.render('qamanager/newCategory',{error:errorMessage,oldValues:oldValues})
+        const errorMessage = "There is already a category like this."
+        res.render('qamanager/newCategory',{error:errorMessage})
         console.log("2")
         return;
     }
@@ -210,8 +209,17 @@ router.get('/Idea', requiresLoginQAmanager, async (req, res) => {
 
 router.get('/viewCategory', async(req, res) => {
     const results = await getAllDocumentFromCollection(CATEGORY_TABLE_NAME)
-    res.render('qamanager/viewCategory',{category:results})
+    if(req.session.error.msg != null ){
+        const errorMsg = req.session.error.msg
+        res.render('qamanager/viewCategory',{category:results,errorMsg:errorMsg})
+        req.session.error.msg = null
+        return
+    } else {
+        res.render('qamanager/viewCategory',{category:results})
+    }
 })
+    
+    
 
 router.get('/newCategory', async (req, res) => {
     res.render('qamanager/newCategory')
@@ -219,16 +227,19 @@ router.get('/newCategory', async (req, res) => {
 
 router.get('/deleteCategory', async (req, res) => {
     const id = req.query.id
+    console.log(id)
     const objectId = ObjectId(id)
     const dbo = await getDB()
     const category = await dbo.collection(CATEGORY_TABLE_NAME).findOne({_id: objectId})
     const result = await searchIdeaByCategory(category.name)
-    if (result == -1){
-        await deleteDocumentById(CATEGORY_TABLE_NAME, id)
-        res.redirect('qamanager/viewCategory')
+    console.log("___")
+    console.log(result.length)
+    if (result.length == 0){
+        await dbo.collection(CATEGORY_TABLE_NAME).deleteOne({_id:objectId})
+        res.redirect('/qamanager/viewCategory')
     } else {
         req.session.error.msg = "This category has been used by some idea(s)."
-        res.redirect('qamanager/viewCategory')
+        res.redirect('/qamanager/viewCategory')
     }
 })
 router.get('/viewComment', requiresLoginQAmanager,async (req,res)=>{

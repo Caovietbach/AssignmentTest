@@ -13,7 +13,7 @@ const {getDB,insertObject,getAccount,getAllDocumentFromCollection,getAnAccount,u
 
 
 
-function requiresLoginqaCoordinator(req,res,next){
+function requiresLoginQACoordinator(req,res,next){
     if(req.session.user){
         if(req.session.user.role != "QACoordinator"){
             res.redirect('/login');
@@ -29,7 +29,7 @@ function requiresLoginqaCoordinator(req,res,next){
 
 
 
-router.post('/submitComment',requiresLoginqaCoordinator, async (req,res)=>{
+router.post('/submitComment',requiresLoginQACoordinator, async (req,res)=>{
     var id = req.body.id
     console.log(id)
     const user = req.session.user.userName
@@ -81,7 +81,7 @@ router.post('/viewSort', async (req, res)=>{
 
 //GET
 
-router.get('/likeIdea',requiresLoginqaCoordinator, async (req, res) => {
+router.get('/likeIdea',requiresLoginQACoordinator, async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     var userEmail = req.session.user.email
@@ -131,7 +131,7 @@ router.get('/likeIdea',requiresLoginqaCoordinator, async (req, res) => {
     }
 })
 
-router.get('/dislikeIdea',requiresLoginqaCoordinator, async (req, res) => {
+router.get('/dislikeIdea',requiresLoginQACoordinator, async (req, res) => {
     const id = req.query.id
     console.log(id)
     const objectId = ObjectId(id)
@@ -183,7 +183,7 @@ router.get('/dislikeIdea',requiresLoginqaCoordinator, async (req, res) => {
     }
 })
 
-router.get('/Idea', requiresLoginqaCoordinator,async (req, res) => {
+router.get('/Idea', requiresLoginQACoordinator,async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     const result = await getAnIdea(objectId)
@@ -192,14 +192,14 @@ router.get('/Idea', requiresLoginqaCoordinator,async (req, res) => {
     res.sendFile(folderPath + name)
 })
 
-router.get('/submitComment', requiresLoginqaCoordinator, async (req, res) => {
+router.get('/submitComment', requiresLoginQACoordinator, async (req, res) => {
     const id = req.query.id
     const objectId = ObjectId(id)
     const result = await getAnIdea(objectId)
     res.render('qacoordinator/submitComment',{idea: result})
 })
 
-router.get('/newIdea', requiresLoginqaCoordinator, async (req,res)=>{
+router.get('/newIdea', requiresLoginQACoordinator, async (req,res)=>{
     const category = await getAllDocumentFromCollection(CATEGORY_TABLE_NAME)
     const event = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
     if(req.session.error.msg != null){
@@ -212,7 +212,7 @@ router.get('/newIdea', requiresLoginqaCoordinator, async (req,res)=>{
     }
 })
 
-router.get('/viewComment', requiresLoginqaCoordinator,async (req,res)=>{
+router.get('/viewComment', requiresLoginQACoordinator,async (req,res)=>{
     const id = req.query.id
     const result = await getIdeaFeedback(id)
     const objectId = ObjectId(id)
@@ -220,7 +220,7 @@ router.get('/viewComment', requiresLoginqaCoordinator,async (req,res)=>{
     res.render('qacoordinator/viewComment',{comments:result,idea:idea})
 })
 
-router.get('/viewIdea',requiresLoginqaCoordinator, async (req, res) => {
+router.get('/viewIdea',requiresLoginQACoordinator, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if (req.session.error.msg != null){
         const error = req.session.error.msg
@@ -231,7 +231,7 @@ router.get('/viewIdea',requiresLoginqaCoordinator, async (req, res) => {
     }
 })
 
-router.get('/home', requiresLoginqaCoordinator,(req,res)=>{
+router.get('/home', requiresLoginQACoordinator,(req,res)=>{
     res.render('qacoordinator/home')
 })
 

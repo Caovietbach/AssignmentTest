@@ -103,7 +103,7 @@ router.post('/newIdea',requiresLoginStaff,uploadStorage.single("myFile"), async 
                 if (err) {
                     console.log(err)
                 } else {
-                    console.log("Successfully send noti to the coordinator!")
+                    console.log("Successfully send noti to the author!")
                 }
             })
             const d = req.session.user.department

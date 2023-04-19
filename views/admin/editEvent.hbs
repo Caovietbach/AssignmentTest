@@ -33,11 +33,11 @@
             <form action="/admin/editEvent" method="post">
                 <input type="hidden" name="id" value="{{event._id}}">
                 Event Name: <br>
-                <input type="text" name="txtUsername" class="form-control" value={{event.name}}><br>
+                <input type="text" name="txtName" class="form-control" value="{{event.name}}"><br>
                 Start Date: <br>
-                <input type="text" name="txtPassword" class="form-control"value={{event.startDate}}><br>
+                <input type="date" class="form-control" name="startDate" value="{{event.startDate}}"><br>
                 End Date: <br>
-                <input type="text" name="txtEmail" class="form-control" value={{event.endDate}}><br>
+                <input type="date" class="form-control" name="endDate" value="{{event.endDate}}"><br>
             <center>
                 <button type="submit" class="btn btn-danger">Edit Event</button>
             </center>
