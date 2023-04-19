@@ -164,6 +164,13 @@ router.post('/viewSort',requiresLoginQAmanager, async (req, res)=>{
 
 //GET
 
+router.get('/submitComment', requiresLoginQAmanager, async (req, res) => {
+    const id = req.query.id
+    const objectId = ObjectId(id)
+    const result = await getAnIdea(objectId)
+    res.render('qamanager/submitComment',{idea: result})
+})
+
 router.get('/home',requiresLoginQAmanager,(req,res)=>{
     res.render('qamanager/home')
 })
