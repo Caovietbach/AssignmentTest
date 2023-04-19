@@ -16,17 +16,16 @@
         <a href="/staff/newIdea">Submit new Idea</a>
         <a href="/logout">Logout</a> 
     </div>
+    <h2 class="text-center">View all Ideas</h2>
     <center>
     <div>
         <span style="color: red;">{{errorMsg}}</span>
         <form method="post" action="/staff/viewSort">
         Searching Idea:
         <br>
-        <input type="text" name="Input" placeholder="Please enter the category or event of the idea(s) you want to search.">    <input type="submit" value="Search">
+        <input type="text" name="Input" placeholder="Seacrh by Category or Event" size="50">    <input type="submit" value="Search">
         </form>
     </div>
-    <center>
-    <h2>View all Ideas</h1>
     </center>
     <div class="table-Listideas p-5">
             <table border="0" cellspacing="2" class="table table-primary table-borderless">
@@ -67,17 +66,17 @@
                                 <a href="/staff/likeIdea?id={{_id}}">
                                     <i class="fa-solid fa-thumbs-up"></i>
                                 </a> 
-                            </button>
-                            <button type="submit" class="btn btn-danger">
+                        </button>
+                        <button type="submit" class="btn btn-danger">
                                 <a href="/staff/dislikeIdea?id={{_id}}">
                                     <i class="fa-solid fa-thumbs-down"></i>
                                 </a> 
-                            </button>
+                        </button>
                             <button type="submit" class="btn btn-light">
                                 <a href="/staff/submitComment?id={{_id}}" class="">
                                     <i class="fa-solid fa-comment fa-beat" style="color: #5f51c2;"></i>
                                 </a> 
-                            </button>
+                        </button>
                             <button class="btn btn-primary">
                                 <a class="text-decoration-none " style="color: black;" href="/staff/viewComment?id={{_id}}">ViewComment</a>
                             </button>
