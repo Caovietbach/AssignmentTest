@@ -404,11 +404,11 @@ router.get('/viewIdea',requiresLoginStaff, async (req, res) => {
     const results = await getAllDocumentFromCollection(IDEA_TABLE_NAME)
     if (req.session.error.msg != null){
         const msg = req.session.error.msg
-        res.render('staff/viewIdea',{ideas:results,ErrorMsg:msg})
+        res.render('staff/viewIdea',{ideas:results.reverse(),ErrorMsg:msg})
         req.session.error.msg = null
         return
     } else {
-        res.render('staff/viewIdea',{ideas:results})
+        res.render('staff/viewIdea',{ideas:results.reverse()})
     }
 })
 
