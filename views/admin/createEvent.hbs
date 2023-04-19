@@ -28,6 +28,9 @@
         <div class="col">
             <h1 class="text-center">Create a new event</h1>
         <div class="container">
+            <div>
+                <span style="color: red;">{{errorMsg}}</span>
+            </div>
             <form action="/admin/createEvent" method="post">
                 <input type="hidden" name="id" value="{{event._id}}">
                 Event Name: <br>
