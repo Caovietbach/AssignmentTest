@@ -174,7 +174,7 @@ router.post('/editEvent', requiresLoginAdmin, async (req,res)=>{
     const name = req.body.txtName
     const startDate = req.body.StartDate
     const endDate = req.body.EndDate
-    
+    const eventId = ObjectId(id)
     const realtimeDate = new Date()
     console.log(Date(realtimeDate))
     const sDate = new Date(req.body.startDate)
@@ -201,7 +201,7 @@ router.post('/editEvent', requiresLoginAdmin, async (req,res)=>{
             'startDate' : startDate,
             'endDate' : endDate
         }
-        var check = await editEvent(id, event)
+        var check = await editEvent(eventId, event)
         console.log(check)
         res.redirect('/admin/viewEvent')
     }

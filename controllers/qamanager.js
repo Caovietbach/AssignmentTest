@@ -117,7 +117,7 @@ router.post('/viewChart',requiresLoginQAmanager, async (req, res) => {
         const events = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
         res.render('qamanager/viewChart',{events:events,chart1:status,departments: JSON.stringify(departmentData),likes: likeData})
         return
-    }  else if(choice == "Pie" ){
+    }  else if(choice == "Pie" ){ // Luong nguoi tham gia event nay cua tung department trong truong
         for (const d in departmentData){
             const a = await searchIdeaByDepartmentAndEvent(departmentData[d],e.name)
             var sum = 0
