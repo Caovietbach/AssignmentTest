@@ -124,7 +124,7 @@ async function updateAccount(accountID,account){
 
 async function editEvent(eventID,e){
     const dbo = await getDB();
-    const result = await dbo.collection(EVENT_TABLE_NAME).updateOne({_id: eventID},{$set : e})
+    const result = await dbo.collection(EVENT_TABLE_NAME).updateOne({_id: eventID},{$set : {name: e.name, startDate: e.startDate, endDate: e.endDate}})
     return result
 }
 
