@@ -68,9 +68,9 @@ router.post('/viewSort',requiresLoginQACoordinator, async (req, res)=>{
         return
     } else if (checkC.length == 0 && checkE.length != 0){
         console.log(checkE)
-        res.render('qacoordinator/viewIdea',{ideas:check.Ereverse()})
+        res.render('qacoordinator/viewIdea',{ideas:checkE.Ereverse()})
         return
-    } else if (checkE.length == 0 && checkE.length == 0){
+    } else if (checkE.length != 0 && checkE.length != 0){
         const result = checkC.concat(checkE)
         res.render('qamanager/viewIdea',{ideas:result.reverse()})
         return
