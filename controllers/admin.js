@@ -245,7 +245,11 @@ router.post('/viewSort',requiresLoginAdmin, async (req, res)=>{
         console.log(checkE)
         res.render('admin/viewIdea',{ideas:checkE.reverse()})
         return
-    } else {
+    } else if (checkE.length == 0 && checkE.length == 0){
+        const result = checkC.concat(checkE)
+        res.render('qamanager/viewIdea',{ideas:result.reverse()})
+        return
+    }else {
         console.log("None")
         req.session.error.msg = "There are no such category or event"
         res.redirect('/admin/viewIdea')

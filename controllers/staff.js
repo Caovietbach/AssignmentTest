@@ -244,6 +244,10 @@ router.post('/viewSort', async (req, res)=>{
         console.log(checkE)
         res.render('staff/viewIdea',{ideas:checkE})
         return
+    } else if (checkE.length == 0 && checkE.length == 0){
+        const result = checkC.concat(checkE)
+        res.render('qamanager/viewIdea',{ideas:result.reverse()})
+        return
     } else {
         console.log("None")
         req.session.error.msg = "There are no such category or event"
@@ -383,9 +387,12 @@ router.get('/newIdea', requiresLoginStaff, async (req,res)=>{
     const event = await getAllDocumentFromCollection(EVENT_TABLE_NAME)
     if(req.session.error.msg != null){
         var ErrorMessage = req.session.error.msg
+        res.render('staff/newIdea',{categories:category,events:event,errorMsg:ErrorMessage})
+        req.session.error.msg = null
+        return
+    } else {
+        res.render('staff/newIdea',{categories:category,events:event})
     }
-    res.render('staff/newIdea',{categories:category,events:event,Errormsg:ErrorMessage})
-    req.session.error.msg = null
 })
 
 router.get('/home', requiresLoginStaff,(req,res)=>{
